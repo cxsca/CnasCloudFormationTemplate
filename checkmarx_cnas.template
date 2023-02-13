@@ -1,0 +1,49 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Template to create Checkmarx CNAS Discovery stack",
+    "Resources": {
+        "CheckmarxDiscoveryAssumeRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "AWS": [
+                                    "arn:aws:iam::882696877841:role/CheckmarxCNASDiscoveryUS"
+                                ]
+                            },
+                            "Action": [
+                                "sts:AssumeRole"
+                            ]
+                        }
+                    ]
+                },
+                "Description": "Role to provide readonly access to Checkmarx",
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/ReadOnlyAccess"
+                ],
+                "RoleName": "CheckmarxDiscoveryAssumeRole"
+            }
+        }
+    },
+    "Outputs": {
+        "RoleName": {
+            "Description": "Name of Created IAM Role",
+            "Value": {
+                "Ref": "CheckmarxDiscoveryAssumeRole"
+            }
+        },
+        "RoleArn": {
+            "Description": "Arn of Created Role",
+            "Value": {
+                "Fn::GetAtt": [
+                    "CheckmarxDiscoveryAssumeRole",
+                    "Arn"
+                ]
+            }
+        }
+    }
+}
